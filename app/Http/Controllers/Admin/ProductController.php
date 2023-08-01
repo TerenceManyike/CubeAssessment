@@ -11,6 +11,7 @@ use App\Models\Variant;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use \DB;
 
 class ProductController extends Controller
 {
@@ -29,7 +30,13 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $variants = Variant::pluck('name', 'id');
+        // Gets all variants belonging to products 
+        $available_variants = DB::table('product_variant')
+                                ->distinct()
+                                ->pluck('variant_id'
+                            );
+
+        $variants = Variant::whereNotIn('id', $available_variants)->pluck('name', 'id');
 
         $product->load('variants');
 
@@ -48,7 +55,13 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $variants = Variant::pluck('name', 'id');
+        // Gets all variants belonging to products 
+        $available_variants = DB::table('product_variant')
+                                ->distinct()
+                                ->pluck('variant_id'
+                            );
+
+        $variants = Variant::whereNotIn('id', $available_variants)->pluck('name', 'id');
 
         $product->load('variants');
 
