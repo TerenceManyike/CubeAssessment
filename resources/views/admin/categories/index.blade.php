@@ -97,7 +97,9 @@
                             </td>
                             <td>
                                 @foreach($category->products as $key => $item)
-                                    <span class="badge badge-info">{{ $item->name }}</span>
+                                    <span class="badge badge-info">
+                                        <a href="{{ route('admin.products.show', $item->id) }}" style="text-decoration: none;">{{ $item->name }}</a>    
+                                    </span>
                                 @endforeach
                             </td>
                             <td>
