@@ -61,7 +61,9 @@
                         </th>
                         <td>
                             @foreach($category->products as $key => $product)
-                                <span class="label label-info">{{ $product->name }}</span>
+                                <span class="label label-info">
+                                    <a href="{{ route('admin.products.show', $product->id) }}" style="text-decoration: none;">{{ $product->name }}</a>
+                                </span>
                             @endforeach
                         </td>
                     </tr>
