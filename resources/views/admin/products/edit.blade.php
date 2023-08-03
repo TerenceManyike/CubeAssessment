@@ -62,17 +62,40 @@
         {{ trans('global.relatedData') }}
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
+        <li class="nav-item m-3">
             <a class="nav-link" href="#product_categories" role="tab" data-toggle="tab">
                 {{ trans('cruds.category.title') }}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="product_categories">
+        <div class="tab-pane m-3" role="tabpanel" id="product_categories">
             @includeIf('admin.products.relationships.productCategories', ['categories' => $product->productCategories])
         </div>
     </div>
 </div>
+
+<div class="card">
+    <div class="card-header">
+        {{ trans('cruds.category.other_categories') }}
+    </div>
+    <div class="card body m-3">
+        <ul>
+            <form method="POST" action="{{ route('admin.product.addToCategory', $product->id) }}">
+                @csrf
+                @foreach($other_ctegories as $key => $category)
+                    <div class="m-3">
+                        <input type="hidden" name="category" value="{{ $key }}" />
+                        <input type="hidden" name="product" value="{{ $product->id }}" />
+                        <li>
+                            <button type="submit" class="btn btn-success btn-block text-white">{{ trans('cruds.category.add_to_category') }} {{ $category }}</button>
+                        </li>
+                    </div>
+                @endforeach
+            </form>
+        </ul>
+    </div>
+</div>
+
 
 @endsection

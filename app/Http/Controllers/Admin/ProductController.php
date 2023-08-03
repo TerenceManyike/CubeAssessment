@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyProductRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Variant;
 use Gate;
@@ -70,9 +71,16 @@ class ProductController extends Controller
                             ->union($available_variants)
                             ->pluck('name', 'id');
 
+        //Gets all category id's this product belongs
+        $categories_id = DB::table('category_product')
+                            ->where('product_id', $product->id)
+                            ->pluck('category_id');  
+
+        $other_ctegories = Category::whereNotIn('id', $categories_id)->pluck('name', 'id');
+
         $product->load('variants');
 
-        return view('admin.products.edit', compact('product', 'variants'));
+        return view('admin.products.edit', compact('product', 'variants', 'other_ctegories'));
     }
 
     public function update(UpdateProductRequest $request, Product $product)
@@ -110,5 +118,23 @@ class ProductController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    //Add product to category from product edit page
+    public function addToCategory(Product $product, Request $request)
+    {
+        $category_id = $request->category ?? '' ;
+        $product_id = $request->product ?? '' ;
+
+        if(isset($category_id, $product_id)){
+            DB::table('category_product')->insert(
+                [
+                    'category_id' => $category_id,
+                    'product_id' => $product_id
+                ]
+            );
+
+            return redirect()->route('admin.products.edit', $product->id) ;
+        }
     }
 }

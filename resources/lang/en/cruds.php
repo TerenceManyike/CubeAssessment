@@ -110,7 +110,10 @@ return [
         ],
     ],
     'category' => [
-        'title'          => 'Category',
+        'title'             => 'Category',
+        'title_singular'    => 'Category',
+        'other_categories'  => 'Other Categories',
+        'add_to_category'   => 'Add this product to category : ',
         'title_singular' => 'Category',
         'fields'         => [
             'id'                      => 'ID',
