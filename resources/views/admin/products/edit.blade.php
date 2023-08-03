@@ -81,9 +81,9 @@
     </div>
     <div class="card body m-3">
         <ul>
-            <form method="POST" action="{{ route('admin.product.addToCategory', $product->id) }}">
-                @csrf
-                @foreach($other_ctegories as $key => $category)
+            @foreach($other_ctegories as $key => $category)
+                <form method="POST" action="{{ route('admin.product.addToCategory', $product->id) }}">
+                    @csrf
                     <div class="m-3">
                         <input type="hidden" name="category" value="{{ $key }}" />
                         <input type="hidden" name="product" value="{{ $product->id }}" />
@@ -91,8 +91,8 @@
                             <button type="submit" class="btn btn-success btn-block text-white">{{ trans('cruds.category.add_to_category') }} {{ $category }}</button>
                         </li>
                     </div>
-                @endforeach
-            </form>
+                </form>
+            @endforeach
         </ul>
     </div>
 </div>
