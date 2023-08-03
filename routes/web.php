@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Product
     Route::delete('products/destroy', 'ProductController@massDestroy')->name('products.massDestroy');
     Route::resource('products', 'ProductController');
+    Route::post('products/{product}/edit', 'ProductController@addToCategory')->name('product.addToCategory');
 
     // Category
     Route::delete('categories/destroy', 'CategoryController@massDestroy')->name('categories.massDestroy');
