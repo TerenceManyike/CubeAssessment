@@ -55,13 +55,21 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Gets all variants belonging to products 
-        $available_variants = DB::table('product_variant')
+        // Gets all variants id's belonging to products 
+        $selected_variants_id = DB::table('product_variant')
                                 ->distinct()
-                                ->pluck('variant_id'
-                            );
+                                ->pluck('variant_id');
 
-        $variants = Variant::whereNotIn('id', $available_variants)->pluck('name', 'id');
+        $available_variants = Variant::whereNotIn('id', $selected_variants_id)->select('name', 'id');
+
+        //Gets all variant id's belonging to this product
+        $variants_id = DB::table('product_variant')
+                                ->where('product_id', $product->id)
+                                ->pluck('variant_id');
+
+        $variants = Variant::whereIn('id', $variants_id)
+                            ->union($available_variants)
+                            ->pluck('name', 'id');
 
         $product->load('variants');
 
