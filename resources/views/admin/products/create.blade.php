@@ -74,7 +74,7 @@
 </div>
 
 <div class="card">
-    <div class="card-header">
+    <div class="card-heade m-3r">
         {{ trans('global.relatedData') }}
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
@@ -85,7 +85,7 @@
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="product_categories">
+        <div class="tab-pane m-3" role="tabpanel" id="product_categories">
             @includeIf('admin.products.relationships.productCategories', ['categories' => $product->productCategories])
         </div>
     </div>
