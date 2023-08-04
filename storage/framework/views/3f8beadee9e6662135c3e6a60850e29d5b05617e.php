@@ -51,6 +51,26 @@
                 <span class="help-block"><?php echo e(trans('cruds.product.fields.variant_helper')); ?></span>
             </div>
             <div class="form-group">
+                <label for="variants"><?php echo e(trans('cruds.category.title_singular')); ?></label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0"><?php echo e(trans('global.select_all')); ?></span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0"><?php echo e(trans('global.deselect_all')); ?></span>
+                </div>
+                <select class="form-control select2 <?php echo e($errors->has('variants') ? 'is-invalid' : ''); ?>" name="category[]" id="category" multiple>
+                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($category->id); ?>" <?php echo e(in_array($category->id, old('category', [])) ? 'selected' : ''); ?>><?php echo e($category->name); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </select>
+                <?php if($errors->has('category')): ?>
+                    <div class="invalid-feedback">
+                        <?php echo e($errors->first('category')); ?>
+
+                    </div>
+                <?php endif; ?>
+            </div>
+
+
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     <?php echo e(trans('global.save')); ?>
 
@@ -66,7 +86,7 @@
 
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
+        <li class="nav-item m-3">
             <a class="nav-link" href="#product_categories" role="tab" data-toggle="tab">
                 <?php echo e(trans('cruds.category.title')); ?>
 

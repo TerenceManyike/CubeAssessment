@@ -47,15 +47,23 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.product.fields.variant_helper') }}</span>
             </div>
-            <label for="">{{ trans('cruds.category.title_singular') }}</label>
-            @foreach($categories as $category)
-                <div class="form-group">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="{{ $category->name }}" value="{{ $category->id }}" name="category[]">
-                        <label class="form-check-label" for="{{ $category->name }}">{{ $category->name }}</label>
-                    </div>
+            <div class="form-group">
+                <label for="variants">{{ trans('cruds.category.title_singular') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                 </div>
-            @endforeach
+                <select class="form-control select2 {{ $errors->has('variants') ? 'is-invalid' : '' }}" name="category[]" id="category" multiple>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}" {{ in_array($category->id, old('category', [])) ? 'selected' : '' }}>{{ $category->name }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('category'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('category') }}
+                    </div>
+                @endif
+            </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
