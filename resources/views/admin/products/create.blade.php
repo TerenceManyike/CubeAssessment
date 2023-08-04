@@ -47,6 +47,15 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.product.fields.variant_helper') }}</span>
             </div>
+            <label for="">{{ trans('cruds.category.title_singular') }}</label>
+            @foreach($categories as $category)
+                <div class="form-group">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="{{ $category->name }}" value="{{ $category->id }}" name="category[]">
+                        <label class="form-check-label" for="{{ $category->name }}">{{ $category->name }}</label>
+                    </div>
+                </div>
+            @endforeach
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
@@ -61,7 +70,7 @@
         {{ trans('global.relatedData') }}
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
+        <li class="nav-item m-3">
             <a class="nav-link" href="#product_categories" role="tab" data-toggle="tab">
                 {{ trans('cruds.category.title') }}
             </a>

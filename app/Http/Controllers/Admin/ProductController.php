@@ -38,16 +38,32 @@ class ProductController extends Controller
 
         $variants = Variant::whereNotIn('id', $available_variants)->pluck('name', 'id');
 
+        $categories = Category::all();
+
         $product->load('variants');
 
-        return view('admin.products.create', compact('product','variants'));
+        return view('admin.products.create', compact('product','variants', 'categories'));
     }
 
-    public function store(StoreProductRequest $request)
+    public function store(StoreProductRequest $request, Product $product)
     {
         $product = Product::create($request->all());
         $product->variants()->sync($request->input('variants', []));
 
+        //Also add to category
+        $product_id = $product->id;
+        $category_ids = $request->category;
+
+        if(isset($category_ids, $product_id)){
+            foreach($category_ids as $category_id){
+                DB::table('category_product')->insert(
+                    [
+                        'category_id' => $category_id,
+                        'product_id' => $product_id
+                    ]
+                );
+            }
+        }
         return redirect()->route('admin.products.index');
     }
 
