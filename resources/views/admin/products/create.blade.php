@@ -50,7 +50,7 @@
             <label for="">{{ trans('cruds.category.title_singular') }}</label>
             @foreach($categories as $category)
                 <div class="form-group">
-                    <div class="form-check form-check-inline">
+                    <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="{{ $category->name }}" value="{{ $category->id }}" name="category[]">
                         <label class="form-check-label" for="{{ $category->name }}">{{ $category->name }}</label>
                     </div>
