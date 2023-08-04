@@ -75,7 +75,7 @@
 
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
+        <li class="nav-item m-3">
             <a class="nav-link" href="#product_categories" role="tab" data-toggle="tab">
                 <?php echo e(trans('cruds.category.title')); ?>
 
