@@ -33,7 +33,7 @@ class ProductController extends Controller
 
         // Gets all variants belonging to products 
         $available_variants = DB::table('product_variant')
-                                ->distinct()
+                                // ->distinct()
                                 ->pluck('variant_id');
 
         $variants = Variant::whereNotIn('id', $available_variants)->pluck('name', 'id');
@@ -73,7 +73,7 @@ class ProductController extends Controller
 
         // Gets all variants id's belonging to products 
         $selected_variants_id = DB::table('product_variant')
-                                ->distinct()
+                                // ->distinct()
                                 ->pluck('variant_id');
 
         $available_variants = Variant::whereNotIn('id', $selected_variants_id)->select('name', 'id');
