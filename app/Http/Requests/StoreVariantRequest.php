@@ -28,6 +28,7 @@ class StoreVariantRequest extends FormRequest
             'name' => [
                 'string',
                 'nullable',
+                'unique:variants',
             ],
         ];
     }

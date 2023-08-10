@@ -28,6 +28,7 @@ class UpdateVariantRequest extends FormRequest
             'name' => [
                 'string',
                 'nullable',
+                'unique:variants',
             ],
         ];
     }
